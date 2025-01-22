@@ -1,29 +1,34 @@
-import React, { useState } from "react";
-import { useCookies } from "react-cookie";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [cookies, setCookie] = useCookies(["auth"]);
+  const { login } = useContext(AuthContext); 
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const user = users.find(
-      (u) => u.username === username && u.password === password
-    );
-
-    if (user) {
+    try {
       
-      setCookie("auth", true, { path: "/", maxAge: 3600 }); // 1 heure
-      navigate("/");
-    } else {
-      setError("Nom d'utilisateur ou mot de passe incorrect");
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const user = users.find(
+        (u) => u.username === username && u.password === password
+      );
+
+      if (user) {
+        
+        login(user.username); 
+        navigate("/"); 
+      } else {
+        
+        setError("Nom d'utilisateur ou mot de passe incorrect");
+      }
+    } catch {
+      setError("Erreur lors de la connexion.");
     }
   };
 
