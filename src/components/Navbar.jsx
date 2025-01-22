@@ -16,7 +16,7 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center">
         
         <Link to="/" className="text-xl font-bold cursor-pointer">
-          <span className="text-blue-400 pointer-events-none">FakeStore</span>
+          <span className="text-blue-400 pointer-events-none">MyShop</span>
         </Link>
 
         
@@ -40,22 +40,32 @@ const Navbar = () => {
             </Link>
           )}
 
-          {!cookies.auth ? (
-            <Link
-              to="/login"
-              className="bg-blue-500 px-4 py-2 rounded-lg text-sm hover:bg-blue-600 cursor-pointer"
-            >
-              <span className="pointer-events-none">Connexion</span>
-            </Link>
-          ) : (
+            {!cookies.auth ? (
+            <>
+                <Link
+                to="/signup"
+                className="bg-gray-500 px-4 py-2 rounded-lg text-sm hover:bg-gray-600"
+                >
+                S'inscrire
+                </Link>
+                <Link
+                to="/login"
+                className="bg-blue-500 px-4 py-2 rounded-lg text-sm hover:bg-blue-600"
+                >
+                Connexion
+                </Link>
+            </>
+            ) : (
             <button
-              onClick={handleLogout}
-              className="bg-red-500 px-4 py-2 rounded-lg text-sm hover:bg-red-600 cursor-pointer"
+                onClick={() => {
+                removeCookie("auth");
+                navigate("/login");
+                }}
+                className="bg-red-500 px-4 py-2 rounded-lg text-sm hover:bg-red-600"
             >
-              <span className="pointer-events-none">Déconnexion</span>
+                Déconnexion
             </button>
-
-          )}
+            )}
         </div>
       </div>
     </nav>

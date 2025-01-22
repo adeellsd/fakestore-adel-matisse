@@ -1,46 +1,60 @@
 import React, { useState } from "react";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const Signup = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
   const [error, setError] = useState("");
-  const [cookies, setCookie] = useCookies(["auth"]);
+  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSignup = (e) => {
     e.preventDefault();
 
-    
+    // Vérifier si l'utilisateur existe déjà
     const users = JSON.parse(localStorage.getItem("users")) || [];
-    const user = users.find(
-      (u) => u.username === username && u.password === password
-    );
+    const userExists = users.find((u) => u.username === formData.username);
 
-    if (user) {
-      
-      setCookie("auth", true, { path: "/", maxAge: 3600 }); // 1 heure
-      navigate("/");
-    } else {
-      setError("Nom d'utilisateur ou mot de passe incorrect");
+    if (userExists) {
+      setError("Nom d'utilisateur déjà utilisé.");
+      return;
     }
+
+    
+    users.push({ username: formData.username, password: formData.password });
+    localStorage.setItem("users", JSON.stringify(users));
+    setSuccess(true);
+
+    
+    setTimeout(() => navigate("/login"), 2000);
   };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <form
-        onSubmit={handleLogin}
+        onSubmit={handleSignup}
         className="bg-white p-6 rounded-lg shadow-md w-80"
       >
-        <h2 className="text-2xl font-bold mb-4 text-center">Connexion</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">Inscription</h2>
         {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
+        {success && (
+          <div className="text-green-500 text-sm mb-4">
+            Inscription réussie ! Redirection vers la connexion...
+          </div>
+        )}
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Nom d'utilisateur</label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
@@ -49,8 +63,9 @@ const Login = () => {
           <label className="block text-gray-700 mb-2">Mot de passe</label>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
@@ -59,11 +74,11 @@ const Login = () => {
           type="submit"
           className="w-full bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600"
         >
-          Se connecter
+          S'inscrire
         </button>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Signup;
