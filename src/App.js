@@ -5,31 +5,26 @@ import ProductPage from "./pages/ProductPage";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-
-import RootProvider from "./contexts/RootProvider";
+import Collection from './pages/Collection';
 
 
 function App() {
   return (
-    <RootProvider>
+    <div>
+      <Navbar />
 
-        <div>
+      <Routes>
 
-          <Navbar />
+          <Route path="/" element={<Home />} />
+          <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/collection/:category" element={<Collection />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
 
-          <Routes>
-
-              <Route path="/" element={<Home />} />
-              <Route path="/products/:id" element={<ProductPage />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-
-          </Routes>
-          
-        </div>
-
-    </RootProvider>    
+      </Routes>
+      
+    </div>
   );
 }
 
