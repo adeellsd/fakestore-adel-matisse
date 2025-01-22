@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
@@ -8,6 +9,7 @@ const Signup = () => {
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const { login } = useContext(AuthContext); // Accès au contexte d'authentification
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -17,7 +19,7 @@ const Signup = () => {
   const handleSignup = (e) => {
     e.preventDefault();
 
-    // Vérifier si l'utilisateur existe déjà
+    // Vérifier si l'utilisateur existe déjà dans localStorage
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const userExists = users.find((u) => u.username === formData.username);
 
@@ -26,13 +28,16 @@ const Signup = () => {
       return;
     }
 
-    
+    // Ajouter l'utilisateur dans le localStorage
     users.push({ username: formData.username, password: formData.password });
     localStorage.setItem("users", JSON.stringify(users));
     setSuccess(true);
 
-    
-    setTimeout(() => navigate("/login"), 2000);
+    // Connecter l'utilisateur automatiquement après l'inscription
+    login("fakeToken123"); // Simule un token d'authentification
+
+    // Rediriger vers la page d'accueil
+    setTimeout(() => navigate("/"), 2000);
   };
 
   return (
@@ -45,7 +50,7 @@ const Signup = () => {
         {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
         {success && (
           <div className="text-green-500 text-sm mb-4">
-            Inscription réussie ! Redirection vers la connexion...
+            Inscription réussie ! Redirection vers l'accueil...
           </div>
         )}
         <div className="mb-4">

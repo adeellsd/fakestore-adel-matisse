@@ -6,23 +6,30 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
+import RootProvider from "./contexts/RootProvider";
+
 
 function App() {
   return (
-    <div>
-      <Navbar />
+    <RootProvider>
 
-      <Routes>
+        <div>
 
-          <Route path="/" element={<Home />} />
-          <Route path="/products/:id" element={<ProductPage />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Navbar />
 
-      </Routes>
-      
-    </div>
+          <Routes>
+
+              <Route path="/" element={<Home />} />
+              <Route path="/products/:id" element={<ProductPage />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+
+          </Routes>
+          
+        </div>
+
+    </RootProvider>    
   );
 }
 
