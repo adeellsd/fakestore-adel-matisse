@@ -6,22 +6,25 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login } = useContext(AuthContext);
+  const { login } = useContext(AuthContext); 
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
+
     try {
-      // Simulation d'une vérification d'utilisateur (exemple avec un localStorage)
+      
       const users = JSON.parse(localStorage.getItem("users")) || [];
       const user = users.find(
         (u) => u.username === username && u.password === password
       );
 
       if (user) {
-        login("fakeToken123"); // Simule un token
-        navigate("/"); // Redirige vers l'accueil
+        
+        login(user.username); 
+        navigate("/"); 
       } else {
+        
         setError("Nom d'utilisateur ou mot de passe incorrect");
       }
     } catch {

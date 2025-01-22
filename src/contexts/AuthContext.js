@@ -7,7 +7,7 @@ const AuthProvider = ({ children }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["auth"]);
   const [isAuthenticated, setIsAuthenticated] = useState(!!cookies.auth);
 
-  // Vérifier l'état de connexion au chargement
+  
   useEffect(() => {
     setIsAuthenticated(!!cookies.auth);
   }, [cookies.auth]);
