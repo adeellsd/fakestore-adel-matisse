@@ -4,7 +4,7 @@ import { CartContext } from "../contexts/CartContext";
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity } = useContext(CartContext);
 
-  // Calculer le total
+  
   const total = cart.reduce(
     (acc, product) => acc + product.price * product.quantity,
     0
@@ -12,9 +12,9 @@ const Cart = () => {
 
   return (
     <div className="container mx-auto my-10">
-      <h1 className="text-2xl font-bold mb-6">Votre Panier</h1>
+      <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
       {cart.length === 0 ? (
-        <p>Votre panier est vide.</p>
+        <p>Your cart is empty.</p>
       ) : (
         <div className="space-y-6">
           {cart.map((product) => (
@@ -52,7 +52,7 @@ const Cart = () => {
                   onClick={() => removeFromCart(product.id)}
                   className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
                 >
-                  Supprimer
+                  Delete
                 </button>
               </div>
             </div>

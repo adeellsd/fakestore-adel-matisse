@@ -11,7 +11,6 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
     try {
       
       const users = JSON.parse(localStorage.getItem("users")) || [];
@@ -22,13 +21,12 @@ const Login = () => {
       if (user) {
         
         login(user.username); 
-        navigate("/"); 
+        navigate("/");
       } else {
-        
-        setError("Nom d'utilisateur ou mot de passe incorrect");
+        setError("Incorrect username or password.s");
       }
     } catch {
-      setError("Erreur lors de la connexion.");
+      setError("Login Error.");
     }
   };
 
@@ -38,10 +36,10 @@ const Login = () => {
         onSubmit={handleLogin}
         className="bg-white p-6 rounded-lg shadow-md w-80"
       >
-        <h2 className="text-2xl font-bold mb-4 text-center">Connexion</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
         {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Nom d'utilisateur</label>
+          <label className="block text-gray-700 mb-2">Username</label>
           <input
             type="text"
             value={username}
@@ -51,7 +49,7 @@ const Login = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Mot de passe</label>
+          <label className="block text-gray-700 mb-2">Password</label>
           <input
             type="password"
             value={password}
@@ -64,7 +62,7 @@ const Login = () => {
           type="submit"
           className="w-full bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600"
         >
-          Se connecter
+          Login
         </button>
       </form>
     </div>

@@ -13,7 +13,7 @@ const AuthProvider = ({ children }) => {
   }, [cookies.auth]);
 
   const login = (token) => {
-    setCookie("auth", token, { path: "/", maxAge: 3600 }); // Cookie valide 1 heure
+    setCookie("auth", token, { path: "/", maxAge: 3600 }); 
     setIsAuthenticated(true);
   };
 

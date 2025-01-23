@@ -16,10 +16,10 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center">
         
         <Link to="/" className="text-xl font-bold text-blue-400">
-          MyShop
+          FakeStore-A.M
         </Link>
 
-        {/* Navigation */}
+      
         <div className="flex items-center space-x-6">
           {isAuthenticated ? (
             <>
@@ -28,7 +28,7 @@ const Navbar = () => {
                 to="/cart"
                 className="flex items-center space-x-2 bg-green-500 px-4 py-2 rounded-lg hover:bg-green-600"
               >
-                <span>Panier</span>
+                <span>Cart</span>
                 <span className="bg-red-500 text-white px-2 py-1 rounded-full">
                   {totalItems}
                 </span>
@@ -42,7 +42,7 @@ const Navbar = () => {
                 }}
                 className="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600"
               >
-                Déconnexion
+                Logout
               </button>
             </>
           ) : (
@@ -52,7 +52,7 @@ const Navbar = () => {
                 to="/signup"
                 className="bg-gray-500 px-4 py-2 rounded-lg hover:bg-gray-600"
               >
-                S'inscrire
+                Signup
               </Link>
 
               
@@ -60,7 +60,7 @@ const Navbar = () => {
                 to="/login"
                 className="bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-600"
               >
-                Connexion
+                Login
               </Link>
             </>
           )}
