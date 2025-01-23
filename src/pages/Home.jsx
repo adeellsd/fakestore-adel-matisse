@@ -84,6 +84,7 @@ function ProductList() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Effet pour charger tous les produits
   useEffect(() => {
@@ -101,16 +102,24 @@ function ProductList() {
     fetchProducts();
   }, []);
 
-  // Effet pour filtrer les produits par catégorie
+  // Effet pour filtrer les produits par catégorie et par recherche
   useEffect(() => {
-    if (selectedCategory === "all") {
-      setFilteredProducts(products);
-    } else {
-      setFilteredProducts(
-        products.filter((product) => product.category === selectedCategory)
+    let updatedProducts = products;
+
+    if (selectedCategory !== "all") {
+      updatedProducts = updatedProducts.filter(
+        (product) => product.category === selectedCategory
       );
     }
-  }, [selectedCategory, products]);
+
+    if (searchTerm) {
+      updatedProducts = updatedProducts.filter((product) =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    setFilteredProducts(updatedProducts);
+  }, [selectedCategory, searchTerm, products]);
 
   // Rendu de la liste des produits
   return (
@@ -119,6 +128,18 @@ function ProductList() {
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 mb-8 text-center">
           All Products
         </h2>
+        
+        {/* Barre de recherche */}
+        <div className="flex justify-center mb-6">
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
+
         {/* Sélecteur de catégorie */}
         <div className="flex justify-end mb-6">
           <select
@@ -133,6 +154,7 @@ function ProductList() {
             ))}
           </select>
         </div>
+
         {/* Grille des produits */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {filteredProducts.map((product) => (
@@ -171,7 +193,7 @@ function Home() {
   return (
     <div>
       <h1 className="text-4xl font-extrabold text-center my-12 text-indigo-600">
-        Welcome to our Fake Shop
+        Welcome to FakeStore-A.M
       </h1>
       <Example />
       <ProductList />
