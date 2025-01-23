@@ -1,5 +1,4 @@
-
-
+//On importe les modules et composants nécessaires
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from "./pages/Home";
@@ -22,7 +21,7 @@ function App() {
           <Navbar />
 
           <Routes>
-
+            {/* On définit les routes de l'application */}
               <Route path="/" element={<Home />} />
               <Route path="/collection/:category" element={<Collection />} />
               <Route path="/product/:id" element={<ProductPage />} />

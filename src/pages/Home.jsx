@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
+// Définition des catégories de produits
 const categories = [
   { name: "All", href: "all" },
   { name: "Men's Clothing", href: "men's clothing" },
@@ -9,10 +10,12 @@ const categories = [
   { name: "Electronics", href: "electronics" },
 ];
 
+// Composant Example pour afficher les collections
 function Example() {
   const navigate = useNavigate();
   const [categoriesWithImages, setCategoriesWithImages] = useState([]);
 
+  // Effet pour charger les images des catégories
   useEffect(() => {
     const fetchCategoryImages = async () => {
       try {
@@ -38,6 +41,7 @@ function Example() {
     fetchCategoryImages();
   }, []);
 
+  // Rendu des collections
   return (
     <div className="bg-gray-50 py-8">
       <div className="container mx-auto max-w-6xl px-4">
@@ -46,11 +50,13 @@ function Example() {
         </h2>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {categoriesWithImages.map((category) => (
+            // Affichage de chaque catégorie
             <div
               key={category.name}
               className="group relative cursor-pointer overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow"
               onClick={() => navigate(`/collection/${category.href}`)} 
             >
+              {/* Image de la catégorie */}
               <div className="relative h-[300px] sm:h-[350px] lg:h-[400px]">
                 <img
                   src={category.imageSrc}
@@ -58,6 +64,7 @@ function Example() {
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
+              {/* Nom et description de la catégorie */}
               <h3 className="mt-4 text-lg font-medium text-gray-800 group-hover:text-indigo-600 text-center">
                 {category.name}
               </h3>
@@ -72,11 +79,13 @@ function Example() {
   );
 }
 
+// Composant ProductList pour afficher la liste des produits
 function ProductList() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
 
+  // Effet pour charger tous les produits
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -92,6 +101,7 @@ function ProductList() {
     fetchProducts();
   }, []);
 
+  // Effet pour filtrer les produits par catégorie
   useEffect(() => {
     if (selectedCategory === "all") {
       setFilteredProducts(products);
@@ -102,12 +112,14 @@ function ProductList() {
     }
   }, [selectedCategory, products]);
 
+  // Rendu de la liste des produits
   return (
     <div className="bg-white py-10">
       <div className="container mx-auto max-w-6xl px-4">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 mb-8 text-center">
           All Products
         </h2>
+        {/* Sélecteur de catégorie */}
         <div className="flex justify-end mb-6">
           <select
             value={selectedCategory}
@@ -121,12 +133,14 @@ function ProductList() {
             ))}
           </select>
         </div>
+        {/* Grille des produits */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {filteredProducts.map((product) => (
             <div
               key={product.id}
               className="group relative bg-gray-50 rounded-lg shadow-md overflow-hidden"
             >
+              {/* Image du produit */}
               <div className="relative h-[250px]">
                 <Link to={`/product/${product.id}`}> 
                   <img
@@ -136,6 +150,7 @@ function ProductList() {
                   />
                 </Link>
               </div>
+              {/* Détails du produit */}
               <div className="p-4">
                 <h3 className="text-lg font-medium text-gray-900 truncate">
                   <Link to={`/product/${product.id}`}>{product.title}</Link> 
@@ -151,6 +166,7 @@ function ProductList() {
   );
 }
 
+// Composant principal Home
 function Home() {
   return (
     <div>

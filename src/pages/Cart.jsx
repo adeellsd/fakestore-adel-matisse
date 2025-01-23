@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { CartContext } from "../contexts/CartContext";
 
+// Composant Cart pour afficher et gérer le panier
 const Cart = () => {
+  // Utilisation du contexte du panier pour accéder aux fonctions et données
   const { cart, removeFromCart, updateQuantity } = useContext(CartContext);
 
-  
+  // Calcul du total du panier
   const total = cart.reduce(
     (acc, product) => acc + product.price * product.quantity,
     0
@@ -14,14 +16,17 @@ const Cart = () => {
     <div className="container mx-auto my-10">
       <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
       {cart.length === 0 ? (
+        // Affichage si le panier est vide
         <p>Your cart is empty.</p>
       ) : (
+        // Affichage du contenu du panier
         <div className="space-y-6">
           {cart.map((product) => (
             <div
               key={product.id}
               className="flex items-center justify-between border-b pb-4"
             >
+              {/* Informations du produit */}
               <div className="flex items-center space-x-4">
                 <img
                   src={product.image}
@@ -33,6 +38,7 @@ const Cart = () => {
                   <p className="text-gray-500">{product.price} €</p>
                 </div>
               </div>
+              {/* Contrôles de quantité et suppression */}
               <div className="flex items-center space-x-4">
                 <button
                   onClick={() => updateQuantity(product.id, product.quantity - 1)}
@@ -57,6 +63,7 @@ const Cart = () => {
               </div>
             </div>
           ))}
+          {/* Affichage du total */}
           <div className="text-right">
             <p className="text-xl font-bold">Total : {total.toFixed(2)} €</p>
           </div>
