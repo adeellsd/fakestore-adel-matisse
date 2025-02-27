@@ -2,6 +2,12 @@
 session_start();
 
 class Cart {
+    
+    public static function getCart() {
+        return $_SESSION["cart"] ?? [];
+    }
+
+    
     public static function addToCart($productId, $price) {
         if (!isset($_SESSION["cart"])) {
             $_SESSION["cart"] = [];
@@ -20,16 +26,14 @@ class Cart {
         }
     }
 
+    
     public static function updateQuantity($productId, $quantity) {
         if (isset($_SESSION["cart"][$productId])) {
             $_SESSION["cart"][$productId]["quantity"] = $quantity;
         }
     }
 
-    public static function getCart() {
-        return $_SESSION["cart"] ?? [];
-    }
-
+    
     public static function getTotal() {
         $total = 0;
         foreach ($_SESSION["cart"] as $product) {

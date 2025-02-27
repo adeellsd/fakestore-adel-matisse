@@ -3,10 +3,12 @@ use PHPUnit\Framework\TestCase;
 require_once __DIR__ . '/../src/Cart.php';
 
 class CartTest extends TestCase {
-    protected function setUp(): void {
+        // Reinit de la session
+        protected function setUp(): void {
         $_SESSION["cart"] = [];
     }
 
+    // Test de l'ajout d'un produit au panier
     public function testAddToCart() {
         Cart::addToCart(1, 10);
         $cart = Cart::getCart();
@@ -14,6 +16,7 @@ class CartTest extends TestCase {
         $this->assertEquals(1, $cart[1]["quantity"]);
     }
 
+    // Test pour avoir le total du panier
     public function testGetTotal() {
         $_SESSION["cart"] = [
             1 => ["price" => 10, "quantity" => 2],

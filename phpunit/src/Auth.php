@@ -1,15 +1,31 @@
 <?php
+session_start();
+
 class Auth {
+    
     public static function login($token) {
-        setcookie("auth", $token, time() + 3600, "/"); // Stocke le token comme en React
+        if (php_sapi_name() === 'cli') {
+            $_SESSION["auth"] = $token; 
+        } else {
+            setcookie("auth", $token, time() + 3600, "/"); 
+        }
     }
 
+   
     public static function isAuthenticated() {
-        return isset($_COOKIE["auth"]); // Vérifie si l'utilisateur est connecté
+        if (php_sapi_name() === 'cli') {
+            return isset($_SESSION["auth"]); 
+        }
+        return isset($_COOKIE["auth"]);
     }
 
+    
     public static function logout() {
-        setcookie("auth", "", time() - 3600, "/"); // Supprime le cookie
+        if (php_sapi_name() === 'cli') {
+            unset($_SESSION["auth"]); 
+        } else {
+            setcookie("auth", "", time() - 3600, "/"); 
+        }
     }
 }
 ?>
