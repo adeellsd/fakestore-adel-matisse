@@ -1,11 +1,21 @@
 <?php
 use PHPUnit\Framework\TestCase;
+
 require_once __DIR__ . '/../src/Cart.php';
 
 class CartTest extends TestCase {
         // Reinit de la session
         protected function setUp(): void {
         $_SESSION["cart"] = [];
+    }
+
+    
+    // Test pour vérifier que le panier est vide au départ
+    
+    public function testCartStartsEmpty() {
+        $cart = Cart::getCart();
+        $this->assertIsArray($cart);
+        $this->assertEmpty($cart); 
     }
 
     // Test de l'ajout d'un produit au panier
