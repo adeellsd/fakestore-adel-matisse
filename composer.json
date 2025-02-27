@@ -1,0 +1,17 @@
+{
+    "name": "adel/fakestore-adel",
+    "require": {
+        "phpunit/phpunit": "^10.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Adel\\FakestoreAdel\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "adeellsd",
+            "email": "adel.saidi.adel@gmail.com"
+        }
+    ]
+}
